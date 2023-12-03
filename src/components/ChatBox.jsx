@@ -83,6 +83,7 @@ const ChatBox = () => {
   }, [chatStatus]);
 
   return (
+    // todo: remove 95dvh
     <div style={{ height: "95dvh", display: "flex", flexDirection: "column" }}>
       <AppBar position="static" sx={{ zIndex: 999 }}>
         <Toolbar>
