@@ -169,6 +169,9 @@ const ChatBox = () => {
             top: "-10px",
             padding: "2px",
             fontSize: "8px",
+            color: serveErr ? "red" : "initial",
+            textAlign: serveErr ? "center" : "initial",
+            width: "100%",
           }}
         >
           {chatStatus === "typing" && (
@@ -176,6 +179,7 @@ const ChatBox = () => {
               Chandler is typing <LoadingDots />
             </>
           )}
+          {serveErr && <div>Chandler is offline</div>}
         </div>
         <TextField
           variant="outlined"
