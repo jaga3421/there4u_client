@@ -83,8 +83,14 @@ const ChatBox = () => {
   }, [chatStatus]);
 
   return (
-    // todo: remove 95dvh
-    <div style={{ height: "95dvh", display: "flex", flexDirection: "column" }}>
+    <div
+      style={{
+        height: "100dvh",
+        overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       <AppBar position="static" sx={{ zIndex: 999 }}>
         <Toolbar>
           <div style={{ display: "flex", alignItems: "center" }}>
@@ -176,12 +182,12 @@ const ChatBox = () => {
             width: "100%",
           }}
         >
-          {chatStatus === "typing" && (
+          {serveErr && <div>Chandler is offline</div>}
+          {!serveErr && chatStatus === "typing" && (
             <>
               Chandler is typing <LoadingDots />
             </>
           )}
-          {serveErr && <div>Chandler is offline</div>}
         </div>
         <TextField
           variant="outlined"
