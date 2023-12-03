@@ -72,7 +72,7 @@ const ChatBox = () => {
   }, [chatStatus]);
 
   return (
-    <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+    <div style={{ height: "100dvh", display: "flex", flexDirection: "column" }}>
       <AppBar position="static" sx={{ zIndex: 999 }}>
         <Toolbar>
           <div style={{ display: "flex", alignItems: "center" }}>
@@ -94,7 +94,7 @@ const ChatBox = () => {
           flex: 1,
           overflowY: "auto",
           padding: "10px",
-          maxHeight: "calc(100vh - 64px)", // Subtracting the height of the AppBar
+          maxHeight: "calc(100dvh - 64px)", // Subtracting the height of the AppBar
         }}
         ref={(div) => {
           if (div) {
