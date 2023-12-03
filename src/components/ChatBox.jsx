@@ -11,7 +11,12 @@ import {
 import SendIcon from "@mui/icons-material/Send";
 import axios from "axios";
 import LoadingDots from "./LoadingDots";
-// import css
+
+import dotenv from "dotenv";
+dotenv.configDotenv();
+
+const backEndUrl = `${process.env.REACT_APP_BACKEND_URL}/api/v1/chat`;
+console.log(backEndUrl);
 
 const ChatBox = () => {
   const [allMessages, setAllMessages] = useState([]);
@@ -32,11 +37,11 @@ const ChatBox = () => {
     setChatStatus("sent");
 
     try {
-      const response = await axios.post("http://localhost:3000/api/v1/chat", {
+      const response = await axios.post(backEndUrl, {
         messages: [...allMessages, newMessage],
       });
 
-      if (response.status == 200) {
+      if (response.status === 200) {
         console.log(...allMessages);
         const newMessage = {
           role: "system",
