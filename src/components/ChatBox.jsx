@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
   AppBar,
   Toolbar,
-  IconButton,
   Typography,
   Avatar,
   TextField,
@@ -19,9 +18,14 @@ const backEndUrl = `${process.env.REACT_APP_BACKEND_URL}/api/v1/chat`;
 console.log(backEndUrl);
 
 const ChatBox = () => {
-  const [allMessages, setAllMessages] = useState([]);
+  // Get allMessage from localstorage if it exists and set it to state allMessages
+  // If it doesn't exist, set allMessages to an empty array
+  const [allMessages, setAllMessages] = useState(
+    JSON.parse(localStorage.getItem("allMessages")) || []
+  );
   const [currentMessage, setCurrentMessage] = useState("");
   const [chatStatus, setChatStatus] = useState("idle");
+  const [serveErr, setServerErr] = useState(false);
 
   const sendMessage = async (event) => {
     event.preventDefault();
@@ -29,16 +33,21 @@ const ChatBox = () => {
       role: "user",
       content: currentMessage,
     };
-    console.log(currentMessage, newMessage);
+
     setAllMessages((prevMessages) => [...prevMessages, newMessage]);
-    console.log(1, allMessages);
+    localStorage.setItem("allMessages", JSON.stringify(allMessages));
 
     setCurrentMessage("");
     setChatStatus("sent");
 
     try {
+      let toSend = [...allMessages, newMessage];
+      if (toSend.length > 20) {
+        // choose only the last 20 messages
+        toSend = toSend.slice(-20);
+      }
       const response = await axios.post(backEndUrl, {
-        messages: [...allMessages, newMessage],
+        messages: toSend,
       });
 
       if (response.status === 200) {
@@ -48,14 +57,15 @@ const ChatBox = () => {
           content: response.data.message,
         };
         setAllMessages((prevMessages) => [...prevMessages, newMessage]);
-        console.log(allMessages);
-
+        localStorage.setItem("allMessages", JSON.stringify(allMessages));
         setChatStatus("received");
       } else {
         setChatStatus("idle");
       }
     } catch (error) {
       console.error(error);
+      setChatStatus("idle");
+      setServerErr(true);
     }
   };
 
@@ -64,7 +74,7 @@ const ChatBox = () => {
     if (chatStatus === "sent") {
       timeoutId = setTimeout(() => {
         setChatStatus("typing");
-      }, 2000);
+      }, 1000);
     } else if (chatStatus === "received") {
       setChatStatus("online");
     }
@@ -82,10 +92,15 @@ const ChatBox = () => {
                 Chandler Bing
               </Typography>
 
-              <Typography variant="body2" style={{ marginRight: "10px" }}>
-                Online
+              <Typography
+                variant="body2"
+                fontSize={10}
+                style={{ marginRight: "10px" }}
+              >
+                {serveErr ? "Offline" : "Online"}
               </Typography>
             </div>
+            {/* Dark/Light theme switcher here */}
           </div>
         </Toolbar>
       </AppBar>
@@ -124,7 +139,8 @@ const ChatBox = () => {
             >
               {msg.role === "system" ? "Chandler Bing" : "You"}
             </Typography>
-            <p
+            <Typography
+              fontSize={14}
               style={{
                 margin: "5px",
                 padding: "10px",
@@ -137,7 +153,7 @@ const ChatBox = () => {
               }}
             >
               {msg.content}
-            </p>
+            </Typography>
           </div>
         ))}
       </div>
