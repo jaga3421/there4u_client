@@ -9,7 +9,7 @@ function Home() {
   const theme = createTheme({
     palette: {
       primary: {
-        main: "#4CAF50", // Green shade
+        main: "#4CAF50",
       },
     },
 
