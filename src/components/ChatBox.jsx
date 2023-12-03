@@ -14,7 +14,7 @@ import LoadingDots from "./LoadingDots";
 import dotenv from "dotenv";
 dotenv.configDotenv();
 
-const backEndUrl = `${process.env.REACT_APP_BACKEND_URL}/api/v1/chat`;
+const backEndUrl = `${process.env.REACT_APP_BACKEND_URL}/api/chat`;
 console.log(backEndUrl);
 
 const ChatBox = () => {
@@ -42,9 +42,9 @@ const ChatBox = () => {
 
     try {
       let toSend = [...allMessages, newMessage];
-      if (toSend.length > 20) {
+      if (toSend.length > 10) {
         // choose only the last 20 messages
-        toSend = toSend.slice(-20);
+        toSend = toSend.slice(-10);
       }
       const response = await axios.post(backEndUrl, {
         messages: toSend,
@@ -62,6 +62,7 @@ const ChatBox = () => {
       } else {
         setChatStatus("idle");
       }
+      setServerErr(false);
     } catch (error) {
       console.error(error);
       setChatStatus("idle");
