@@ -83,7 +83,7 @@ const ChatBox = () => {
   }, [chatStatus]);
 
   return (
-    <div style={{ height: "100dvh", display: "flex", flexDirection: "column" }}>
+    <div style={{ height: "95dvh", display: "flex", flexDirection: "column" }}>
       <AppBar position="static" sx={{ zIndex: 999 }}>
         <Toolbar>
           <div style={{ display: "flex", alignItems: "center" }}>
