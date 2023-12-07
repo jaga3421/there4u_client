@@ -53,7 +53,7 @@ const ChatBox = () => {
       if (response.status === 200) {
         console.log(...allMessages);
         const newMessage = {
-          role: "system",
+          role: "assistant",
           content: response.data.message,
         };
         setAllMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -128,24 +128,25 @@ const ChatBox = () => {
         {allMessages.map((msg, index) => (
           <div
             key={index}
-            className={`user-${msg.role === "system" ? "bing" : "user"}`}
+            className={`user-${msg.role === "assistant" ? "bing" : "user"}`}
             style={{
               display: "flex",
               flexDirection: "column",
-              justifyContent: msg.role !== "system" ? "flex-end" : "flex-start",
-              marginLeft: msg.role === "system" ? "0" : "auto",
+              justifyContent:
+                msg.role !== "assistant" ? "flex-end" : "flex-start",
+              marginLeft: msg.role === "assistant" ? "0" : "auto",
               width: "80%",
             }}
           >
             <Typography
               fontSize={9}
               style={{
-                textAlign: msg.role === "system" ? "left" : "right",
-                paddingLeft: msg.role === "system" ? "10px" : "0",
-                paddingRight: msg.role === "system" ? "0" : "10px",
+                textAlign: msg.role === "assistant" ? "left" : "right",
+                paddingLeft: msg.role === "assistant" ? "10px" : "0",
+                paddingRight: msg.role === "assistant" ? "0" : "10px",
               }}
             >
-              {msg.role === "system" ? "Chandler Bing" : "You"}
+              {msg.role === "assistant" ? "Chandler Bing" : "You"}
             </Typography>
             <Typography
               fontSize={14}
@@ -153,9 +154,9 @@ const ChatBox = () => {
                 margin: "5px",
                 padding: "10px",
                 background: "#f1f0f0",
-                textAlign: msg.role === "system" ? "left" : "right",
+                textAlign: msg.role === "assistant" ? "left" : "right",
                 borderRadius:
-                  msg.role === "system"
+                  msg.role === "assistant"
                     ? "20px 20px 20px 0"
                     : "20px 20px 0 20px",
               }}
