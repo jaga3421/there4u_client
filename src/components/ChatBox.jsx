@@ -128,25 +128,24 @@ const ChatBox = () => {
         {allMessages.map((msg, index) => (
           <div
             key={index}
-            className={`user-${msg.role === "assistant" ? "bing" : "user"}`}
+            className={`user-${msg.role === "user" ? "user" : "bing"}`}
             style={{
               display: "flex",
               flexDirection: "column",
-              justifyContent:
-                msg.role !== "assistant" ? "flex-end" : "flex-start",
-              marginLeft: msg.role === "assistant" ? "0" : "auto",
+              justifyContent: msg.role === "user" ? "flex-end" : "flex-start",
+              marginLeft: msg.role !== "user" ? "0" : "auto",
               width: "80%",
             }}
           >
             <Typography
               fontSize={9}
               style={{
-                textAlign: msg.role === "assistant" ? "left" : "right",
-                paddingLeft: msg.role === "assistant" ? "10px" : "0",
-                paddingRight: msg.role === "assistant" ? "0" : "10px",
+                textAlign: msg.role === "user" ? "right" : "left",
+                paddingLeft: msg.role === "user" ? "0" : "10px",
+                paddingRight: msg.role === "user" ? "10px" : "0px",
               }}
             >
-              {msg.role === "assistant" ? "Chandler Bing" : "You"}
+              {msg.role !== "user" ? "Chandler Bing" : "You"}
             </Typography>
             <Typography
               fontSize={14}
@@ -154,11 +153,9 @@ const ChatBox = () => {
                 margin: "5px",
                 padding: "10px",
                 background: "#f1f0f0",
-                textAlign: msg.role === "assistant" ? "left" : "right",
+                textAlign: msg.role !== "user" ? "left" : "right",
                 borderRadius:
-                  msg.role === "assistant"
-                    ? "20px 20px 20px 0"
-                    : "20px 20px 0 20px",
+                  msg.role !== "user" ? "20px 20px 20px 0" : "20px 20px 0 20px",
               }}
             >
               {msg.content}
